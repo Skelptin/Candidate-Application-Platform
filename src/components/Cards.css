@@ -20,7 +20,8 @@
 
 .card-title {
     font-size: 1.25rem;
-    font-weight: bold;
+    font-weight: bolder;
+    color: #707070;
     margin-bottom: 8px;
 }
 
@@ -30,10 +31,11 @@
     margin-bottom: 8px;
 }
 
+
 .card-location {
     font-size: 0.875rem;
-    color: #777777;
     margin-bottom: 8px;
+    font-weight: bolder;
 }
 
 .card-description {
@@ -50,4 +52,16 @@
     align-items: center;
     height: 1vh;
     box-shadow: 0 2px 4px 3px rgba(0, 0, 0, 0.1);
+}
+
+.job {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+
+}
+
+.jobInfo {
+    line-height: 0.7rem;
+    margin: 0.2rem;
 }
