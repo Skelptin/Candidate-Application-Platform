@@ -15,7 +15,7 @@ export const fetchSampleData = createAsyncThunk(
             myHeaders.append("Content-Type", "application/json");
 
             const body = JSON.stringify({
-                "limit": 20,
+                "limit": 100,
                 "offset": 0
             });
 
@@ -26,7 +26,7 @@ export const fetchSampleData = createAsyncThunk(
             };
 
             const response = await fetch("https://api.weekday.technology/adhoc/getSampleJdJSON", requestOptions);
-            console.log(response)
+
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
             }
