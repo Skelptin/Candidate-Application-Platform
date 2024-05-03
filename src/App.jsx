@@ -33,12 +33,12 @@ function App() {
 
   return (
     <>
-      <Navbar />
       <SearchBar
         setSearchTerm={setSearchTerm}
         setMinSalaryFilter={setMinSalaryFilter}
         setMinExperienceFilter={setMinExperienceFilter}
       />
+
       <div className="card-container">
         {loading ? (
           <p>Loading...</p>

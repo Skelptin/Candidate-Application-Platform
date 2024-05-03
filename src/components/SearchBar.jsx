@@ -12,11 +12,12 @@ const SearchBar = ({ setSearchTerm, setMinSalaryFilter, setMinExperienceFilter }
     const [locations, setLocations] = useState([]);
     const [minSalary, setMinSalary] = useState([]);
     const [minExperience, setMinExperience] = useState([]);
+    const [companies, setCompanies] = useState([]);
     const [remoteOptions, setRemoteOptions] = useState(['Remote', 'On-Site']);
 
     useEffect(() => {
 
-        //Getting unique data from the json to show option in the Text Field
+        //Getting unique data from the json to load it in options
         if (data) {
             const uniqueRoles = [...new Set(data.jdList.map((job) => job.jobRole))];
             setJobRoles(uniqueRoles);
@@ -30,12 +31,14 @@ const SearchBar = ({ setSearchTerm, setMinSalaryFilter, setMinExperienceFilter }
 
             const uniqueMinExperiences = [...new Set(data.jdList.map((job) => job.minExp).filter(exp => exp !== null))];
             setMinExperience(uniqueMinExperiences);
+
+            const uniqueCompanies = [...new Set(data.jdList.map((job) => job.companyName))];
+            setCompanies(uniqueCompanies);
         }
     }, [data]);
 
     return (
         <div className='container'>
-
             <Autocomplete
                 disablePortal
                 options={jobRoles}
@@ -67,7 +70,6 @@ const SearchBar = ({ setSearchTerm, setMinSalaryFilter, setMinExperienceFilter }
                     />
                 )}
             />
-
 
             <Autocomplete
                 disablePortal
@@ -103,6 +105,21 @@ const SearchBar = ({ setSearchTerm, setMinSalaryFilter, setMinExperienceFilter }
                 )}
             />
 
+            <Autocomplete
+                disablePortal
+                options={companies}
+                onChange={(event, value) => setSearchTerm(value || '')}
+                renderInput={(params) => (
+                    <TextField
+                        {...params}
+                        sx={{ width: '15rem' }}
+                        label="Company Name"
+                        variant="outlined"
+                        InputProps={{ ...params.InputProps, style: { color: 'blue' } }}
+                        InputLabelProps={{ style: { color: 'grey' } }}
+                    />
+                )}
+            />
 
             <Autocomplete
                 disablePortal

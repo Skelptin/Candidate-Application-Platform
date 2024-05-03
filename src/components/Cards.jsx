@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { FaHourglassHalf } from 'react-icons/fa6';
 import { FaCheckSquare } from "react-icons/fa";
 import { AiFillThunderbolt } from "react-icons/ai";
+import { FaRegCircleUser } from "react-icons/fa6";
 
 import './Cards.css';
 
@@ -72,9 +73,14 @@ const Cards = ({ job }) => {
 
             <p className='card-exp'>Minimum Experience <br /><span>{job.minExp == null ? 5 : job.minExp} years</span></p>
 
-            <button className='card-btn'>
+            <button title='Easy Apply' className='card-btn'>
                 <AiFillThunderbolt style={{ color: "#e7bf33" }} />
                 Easy Apply
+            </button>
+
+            <button title='Unlock referral' className='card-ref-btn'>
+                <FaRegCircleUser style={{ color: "white" }} />
+                Unlock referral asks
             </button>
         </div>
     );
