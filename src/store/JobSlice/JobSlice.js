@@ -1,4 +1,3 @@
-// JobSlice/JobSlice.js
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
@@ -16,7 +15,7 @@ export const fetchSampleData = createAsyncThunk(
             myHeaders.append("Content-Type", "application/json");
 
             const body = JSON.stringify({
-                "limit": 10,
+                "limit": 20,
                 "offset": 0
             });
 
@@ -27,12 +26,12 @@ export const fetchSampleData = createAsyncThunk(
             };
 
             const response = await fetch("https://api.weekday.technology/adhoc/getSampleJdJSON", requestOptions);
-
+            console.log(response)
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
             }
 
-            return response.json(); // Assuming the response is JSON data
+            return response.json();
         } catch (error) {
             throw new Error('Failed to fetch data');
         }

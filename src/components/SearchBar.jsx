@@ -1,164 +1,170 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchSampleData } from '../store/JobSlice/JobSlice';
-import "./SearchBar.css"
+import "./SearchBar.css";
 
-const SearchBar = () => {
+const SearchBar = ({ setSearchTerm }) => {
+  const dispatch = useDispatch();
+  const { loading, error, data } = useSelector((state) => state.job);
 
-    const dispatch = useDispatch();
-    const { loading, error, data } = useSelector((state) => state.job);
+  const [jobRoles, setJobRoles] = useState([]);
+  const [companies, setCompanies] = useState([]);
+  const [locations, setLocations] = useState([]);
+  const [minSalary, setMinSalary] = useState([]);
+  const [minExperience, setMinExperience] = useState([]);
+  const [techStack, setTechStack] = useState([]);
+  const [remoteOptions, setRemoteOptions] = useState(['Remote', 'On-Site']);
 
-    useEffect(() => {
-        dispatch(fetchSampleData());
-    }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchSampleData());
+  }, [dispatch]);
 
+  useEffect(() => {
+    if (data) {
+      const uniqueRoles = [...new Set(data.jdList.map((job) => job.jobRole))];
+      setJobRoles(uniqueRoles);
 
+      const uniqueCompanies = [...new Set(data.jdList.map((job) => job.companyName))];
+      setCompanies(uniqueCompanies);
 
-    return (
-        <div className='container'>
-            <Autocomplete
-                disablePortal
-                id="combo-box-demo"
-                renderInput={(params) => (
-                    <TextField
-                        {...params}
-                        sx={{
-                            width: '10rem',
-                            borderColor: 'red'
-                        }}
-                        label="Roles "
-                        variant="outlined"
-                        InputProps={{
-                            ...params.InputProps,
-                            style: { color: 'blue', borderColor: 'green' },
-                        }}
-                        InputLabelProps={{
-                            ...params.InputLabelProps,
-                            style: { color: 'grey' },
-                        }}
-                    />
-                )}
-            />
+      const uniqueLocations = [...new Set(data.jdList.map((job) => job.location))];
+      setLocations(uniqueLocations);
 
-            <Autocomplete
-                disablePortal
-                id="combo-box-demo"
-                renderInput={(params) => (
-                    <TextField
-                        {...params}
-                        sx={{
-                            width: '15rem',
-                        }}
-                        label="Number Of Employees"
-                        variant="outlined"
-                        InputProps={{
-                            ...params.InputProps,
-                            style: { color: 'blue', borderColor: 'green' },
-                        }}
-                        InputLabelProps={{
-                            ...params.InputLabelProps,
-                            style: { color: 'grey' },
-                        }}
-                    />
-                )}
-            />
+      const uniqueMinSalaries = [...new Set(data.jdList.map((job) => job.minJdSalary))];
+      setMinSalary(uniqueMinSalaries);
 
-            <Autocomplete
-                disablePortal
-                id="combo-box-demo"
-                renderInput={(params) => (
-                    <TextField
-                        {...params}
-                        sx={{
-                            width: '10rem',
-                        }}
-                        label="Experience "
-                        variant="outlined"
-                        InputProps={{
-                            ...params.InputProps,
-                            style: { color: 'blue', borderColor: 'green' },
-                        }}
-                        InputLabelProps={{
-                            ...params.InputLabelProps,
-                            style: { color: 'grey' },
-                        }}
-                    />
-                )}
-            />
+      const uniqueMinExperiences = [...new Set(data.jdList.map((job) => job.minExp))];
+      setMinExperience(uniqueMinExperiences);
 
-            <Autocomplete
-                disablePortal
-                id="combo-box-demo"
-                renderInput={(params) => (
-                    <TextField
-                        {...params}
-                        sx={{
-                            width: '10rem',
-                        }}
-                        label="Remote"
-                        variant="outlined"
-                        InputProps={{
-                            ...params.InputProps,
-                            style: { color: 'blue', borderColor: 'green' },
-                        }}
-                        InputLabelProps={{
-                            ...params.InputLabelProps,
-                            style: { color: 'grey' },
-                        }}
-                    />
-                )}
-            />
+      const uniqueTechStacks = [...new Set(data.jdList.map((job) => job.techStack))];
+      setTechStack(uniqueTechStacks);
+    }
+  }, [data]);
 
-            <Autocomplete
+  return (
+    <div className='container'>
+      <Autocomplete
+        disablePortal
+        id="job-role-autocomplete"
+        options={jobRoles}
+        onChange={(event, value) => setSearchTerm(value || '')}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            sx={{ width: '15rem' }}
+            label="Roles"
+            variant="outlined"
+            InputProps={{ ...params.InputProps, style: { color: 'blue' } }}
+            InputLabelProps={{ style: { color: 'grey' } }}
+          />
+        )}
+      />
 
-                disablePortal
-                id="combo-box-demo"
-                renderInput={(params) => (
-                    <TextField
-                        {...params}
-                        sx={{
-                            width: '20rem',
-                        }}
-                        label="Minimum Base Pay Salary"
-                        variant="outlined"
-                        InputProps={{
-                            ...params.InputProps,
-                            style: { color: 'blue', borderColor: 'green' },
-                        }}
-                        InputLabelProps={{
-                            ...params.InputLabelProps,
-                            style: { color: 'grey' },
-                        }}
-                    />
-                )}
-            />
-            <Autocomplete
-                disablePortal
-                id="combo-box-demo"
-                renderInput={(params) => (
-                    <TextField
-                        {...params}
-                        sx={{
+      <Autocomplete
+        disablePortal
+        id="company-name-autocomplete"
+        options={companies}
+        onChange={(event, value) => setSearchTerm(value || '')}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            sx={{ width: '15rem' }}
+            label="Company Name"
+            variant="outlined"
+            InputProps={{ ...params.InputProps, style: { color: 'blue' } }}
+            InputLabelProps={{ style: { color: 'grey' } }}
+          />
+        )}
+      />
 
-                            width: '15rem',
-                        }}
-                        label="Search Company Name"
-                        variant="outlined"
-                        InputProps={{
-                            ...params.InputProps,
-                            style: { color: 'blue', borderColor: 'grey' },
-                        }}
-                        InputLabelProps={{
-                            ...params.InputLabelProps,
-                            style: { color: 'grey' },
-                        }}
-                    />
-                )}
-            />
-        </div>
-    );
+      <Autocomplete
+        disablePortal
+        id="location-autocomplete"
+        options={locations}
+        onChange={(event, value) => setSearchTerm(value || '')}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            sx={{ width: '15rem' }}
+            label="Location"
+            variant="outlined"
+            InputProps={{ ...params.InputProps, style: { color: 'blue' } }}
+            InputLabelProps={{ style: { color: 'grey' } }}
+          />
+        )}
+      />
+
+      <Autocomplete
+        disablePortal
+        id="min-salary-autocomplete"
+        options={minSalary}
+        onChange={(event, value) => setSearchTerm(value || '')}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            sx={{ width: '15rem' }}
+            label="Minimum Base Pay Salary"
+            variant="outlined"
+            InputProps={{ ...params.InputProps, style: { color: 'blue' } }}
+            InputLabelProps={{ style: { color: 'grey' } }}
+          />
+        )}
+      />
+
+      <Autocomplete
+        disablePortal
+        id="min-experience-autocomplete"
+        options={minExperience}
+        onChange={(event, value) => setSearchTerm(value || '')}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            sx={{ width: '15rem' }}
+            label="Minimum Experience"
+            variant="outlined"
+            InputProps={{ ...params.InputProps, style: { color: 'blue' } }}
+            InputLabelProps={{ style: { color: 'grey' } }}
+          />
+        )}
+      />
+
+      <Autocomplete
+        disablePortal
+        id="tech-stack-autocomplete"
+        options={techStack}
+        onChange={(event, value) => setSearchTerm(value || '')}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            sx={{ width: '15rem' }}
+            label="Tech Stack"
+            variant="outlined"
+            InputProps={{ ...params.InputProps, style: { color: 'blue' } }}
+            InputLabelProps={{ style: { color: 'grey' } }}
+          />
+        )}
+      />
+
+      <Autocomplete
+        disablePortal
+        id="remote-autocomplete"
+        options={remoteOptions}
+        onChange={(event, value) => setSearchTerm(value || '')}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            sx={{ width: '15rem' }}
+            label="Remote/On-Site"
+            variant="outlined"
+            InputProps={{ ...params.InputProps, style: { color: 'blue' } }}
+            InputLabelProps={{ style: { color: 'grey' } }}
+          />
+        )}
+      />
+    </div>
+  );
 };
 
 export default SearchBar;
