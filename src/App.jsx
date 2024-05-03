@@ -9,7 +9,7 @@ function App() {
 
   const dispatch = useDispatch();
 
-  const { loading, error, data } = useSelector((state) => state.job);
+  const { loading, error, data } = useSelector((state) => state.job);  //fetching api data 
 
   console.log('card', data)
 
@@ -20,8 +20,8 @@ function App() {
   return (
     <>
       <Navbar />
-      <SearchBar />
 
+      <SearchBar />
 
       <div className="card-container">
         {loading ? (
